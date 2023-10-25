@@ -1,8 +1,8 @@
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
-import { Config } from "@sveltejs/kit";
 
-const config: Config = {
+/** @type {import("@sveltejs/kit").Config} */
+const config = {
 	kit: {
 		adapter: adapter()
 	},
