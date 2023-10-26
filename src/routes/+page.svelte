@@ -1,8 +1,4 @@
-<svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Pass rank home page" />
-</svelte:head>
+<script lang="ts">
+</script>
 
-<section class="flex justify-center">
-    This is a test
-</section>
+<section class="flex justify-center">Welcum</section>
