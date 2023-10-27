@@ -1,9 +1,11 @@
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
+import type { SessionUser } from "$lib/models/session-user";
+
 declare global {
     namespace App {
         // interface Error {}
-        // interface Locals {}
+        interface Locals {
+            user?: SessionUser,
+        }
         // interface PageData {}
         // interface Platform {}
     }

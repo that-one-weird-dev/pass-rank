@@ -1,7 +1,7 @@
-import { db } from "$lib/db.server";
+import type { LayoutServerLoad } from "./$types"
 
-export async function load() {
+export const load: LayoutServerLoad = async (event) => {
     return {
-        users: db.user.findMany(),
+        user: event.locals.user,
     }
 }
