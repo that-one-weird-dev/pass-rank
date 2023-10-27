@@ -1,7 +1,6 @@
 import type { SessionUser } from "$lib/models/session-user";
 import type { JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
-import { verify } from "jsonwebtoken";
 
 const JWT_ACCESS_SECRET = "SUPER_SECRET_SECRET";
 
@@ -23,7 +22,7 @@ export function authUser(
 export function verifyUser(token: string): SessionUser | undefined {
   let jwtUser: JwtPayload | string;
   try {
-    jwtUser = verify(token, JWT_ACCESS_SECRET);
+    jwtUser = jwt.verify(token, JWT_ACCESS_SECRET);
   } catch (e) {
     return undefined;
   }
