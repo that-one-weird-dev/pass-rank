@@ -1,5 +1,12 @@
 <script lang="ts">
+    import User from '../components/User.svelte';
+
+    export let data;
+    $: users = data.pageUsers.toReversed();
 </script>
 
-<section class="flex justify-center">
-</section>
+<div class="flex flex-col gap-3">
+    {#each users as user, i}
+        <User {user} rank={i + 1} />
+    {/each}
+</div>

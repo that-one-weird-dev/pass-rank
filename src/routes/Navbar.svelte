@@ -2,13 +2,14 @@
     import { enhance } from '$app/forms';
     import { goto } from '$app/navigation';
     import type { SessionUser } from '$lib/models/session-user';
+    import UserTag from '../components/UserTag.svelte';
 
     export let user: SessionUser | undefined;
 </script>
 
 <nav class="w-full bg-slate-800 text-white flex flex-row rounded-b-lg shadow-lg">
     <div class="p-4 border-b border-l border-gray-700 w-full rounded-bl-lg">
-        <button class="text-white text-xl font-bold" on:click={() => goto('/')}>Pass Rank</button>
+        <button class="text-white text-3xl font-bold" on:click={() => goto('/')}>Pass/Rank</button>
     </div>
 
     <div class="flex flex-row-reverse">
@@ -22,7 +23,7 @@
                 </button>
             </form>
             <div class="flex items-center border-b border-gray-700 pr-6">
-                <a href="/user" class="whitespace-nowrap">@{user.username}</a>
+                <UserTag username={user.username} />
             </div>
         {:else}
             <button
