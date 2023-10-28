@@ -9,7 +9,7 @@ export async function fetchUsers(page: number = 0, pageSize: number = 10): Promi
       loginCount: true,
     },
     orderBy: {
-      loginCount: "asc",
+      loginCount: "desc",
     },
     take: pageSize,
     skip: page * pageSize,

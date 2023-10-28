@@ -7,7 +7,8 @@
     export let isCurrentUser: boolean = false;
 </script>
 
-<div class="bg-slate-800 rounded-xl border border-gray-700 flex divide-x divide-gray-700 shadow-lg"
+<div
+    class="bg-slate-800 rounded-xl border border-gray-700 flex divide-x divide-gray-700 shadow-lg"
     class:border-indigo-600={isCurrentUser}
 >
     {#if rank}
@@ -31,7 +32,10 @@
             <div class="text-3xl">{user.displayName}</div>
             <div><UserTag username={user.username} /></div>
         </div>
-        <div class="text-xl"><strong class="text-green-300">{user.loginCount}</strong> {user.loginCount === 1 ? "login" : "logins"}</div>
+        <div class="text-xl">
+            <strong class="text-green-300">{user.loginCount}</strong>
+            {user.loginCount === 1 ? 'login' : 'logins'}
+        </div>
     </div>
 </div>
 
