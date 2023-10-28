@@ -16,6 +16,6 @@ model User {
   username       String   @unique
   password       String   @unique
   displayName    String
-  loginCount     Int      @default(0)
+  loginCount     Int      @default(1)
   ownershipToken String
 }

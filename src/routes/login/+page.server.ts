@@ -57,6 +57,15 @@ export const actions: Actions = {
       };
     }
 
+    user.loginCount += 1;
+
+    await db.user.update({
+      data: user,
+      where: {
+        id: user.id,
+      },
+    });
+
     const token = authUser(user);
     if (!token) {
       return {
