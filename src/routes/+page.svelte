@@ -2,8 +2,8 @@
     import User from '../components/User.svelte';
 
     export let data;
-    console.dir(data);
-    $: users = data.pageUsers.toReversed();
+
+    const users = data.pageUsers.toReversed();
 </script>
 
 <div class="flex flex-col gap-3">
