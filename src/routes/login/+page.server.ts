@@ -112,6 +112,7 @@ export const actions: Actions<ActionResult> = {
     const foundUser = await db.user.findFirst({
       select: {
         username: true,
+        password: true,
       },
       where: {
         OR: [
@@ -122,19 +123,19 @@ export const actions: Actions<ActionResult> = {
     });
 
     if (foundUser) {
-      if (foundUser.username === creds.username) {
-        return {
-          error: {
-            type: "user-exists",
-          } as const,
-        };
-      } else {
+      if (foundUser.password === hashedPass) {
         return {
           error: {
             type: "password-exists",
             username: foundUser?.username,
           } as const,
         } as const;
+      } else {
+        return {
+          error: {
+            type: "user-exists",
+          } as const,
+        };
       }
     }
 
