@@ -8,6 +8,6 @@
 
 <div class="flex flex-col gap-3">
     {#each users as user, i}
-        <User {user} rank={i + 1} />
+        <User {user} rank={i + 1} isCurrentUser={user.username === data.user?.username} />
     {/each}
 </div>

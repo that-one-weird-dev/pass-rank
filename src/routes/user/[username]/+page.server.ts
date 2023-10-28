@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ params }) => {
   });
 
   if (!user) {
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   }
 
   return {

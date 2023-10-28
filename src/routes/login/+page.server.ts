@@ -18,24 +18,24 @@ const RegisterForm = LoginForm.merge(
 );
 
 type ActionResultError = {
-  type: "invalid-data" | "invalid-credentials" | "user-exists",
+  type: "invalid-data" | "invalid-credentials" | "user-exists";
 } | {
-  type: "password-exists",
-  username: string,
+  type: "password-exists";
+  username: string;
 };
 
-type ActionResult = Promise<{
-  error: ActionResultError,
-}>;
+type ActionResult = {
+  error: ActionResultError;
+} | void;
 
 export const load: PageServerLoad = ({ locals }) => {
   if (locals.user) {
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   }
 };
 
-export const actions: Actions = {
-  login: async ({ cookies, request }): ActionResult => {
+export const actions: Actions<ActionResult> = {
+  login: async ({ cookies, request }) => {
     const result = LoginForm.safeParse(
       Object.fromEntries(await request.formData()),
     );
@@ -92,9 +92,9 @@ export const actions: Actions = {
       maxAge: 60 * 60 * 24,
     });
 
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   },
-  register: async ({ cookies, request }): ActionResult => {
+  register: async ({ cookies, request }) => {
     const result = RegisterForm.safeParse(
       Object.fromEntries(await request.formData()),
     );
@@ -158,7 +158,7 @@ export const actions: Actions = {
       maxAge: 60 * 60 * 24,
     });
 
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   },
   logout: async ({ cookies, locals }) => {
     cookies.delete("AuthorizationToken");
