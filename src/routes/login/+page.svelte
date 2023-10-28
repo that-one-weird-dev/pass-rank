@@ -14,7 +14,8 @@
     {#if isRegister}
         <div class="rounded-lg shadow-lg bg-yellow-600 p-4 border border-yellow-400 max-w-sm">
             <p class="text-sm">
-                Do NOT put a password that you use elsewhere, because people will be able to see that.
+                Do NOT put a password that you use elsewhere in here.
+                <strong>People will be able to see that!</strong>
             </p>
         </div>
     {/if}
