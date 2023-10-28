@@ -1,6 +1,6 @@
 import { db } from "$lib/db.server";
 import { fail } from "@sveltejs/kit";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { authUser } from "$lib/utils/auth.server";
 import { hashPassword } from "$lib/utils/password.server";
 import { redirect } from "@sveltejs/kit";
@@ -27,6 +27,12 @@ type ActionResultError = {
 type ActionResult = Promise<{
   error: ActionResultError,
 }>;
+
+export const load: PageServerLoad = ({ locals }) => {
+  if (locals.user) {
+    throw redirect(302, "/");
+  }
+};
 
 export const actions: Actions = {
   login: async ({ cookies, request }): ActionResult => {
