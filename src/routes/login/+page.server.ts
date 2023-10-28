@@ -49,9 +49,12 @@ export const actions: Actions = {
 
     const credentials = result.data;
 
+    const hashedPass = await hashPassword(credentials.password);
+
     const user = await db.user.findUnique({
       where: {
         username: credentials.username,
+        password: hashedPass,
       },
     });
 
