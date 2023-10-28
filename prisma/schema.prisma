@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -9,15 +10,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  username    String @unique
-  displayName String
-
-  password       String @unique
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  username       String   @unique
+  password       String   @unique
+  displayName    String
+  loginCount     Int      @default(1)
   ownershipToken String
-
-  loginCount Int @default(0)
 }

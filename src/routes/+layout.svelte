@@ -7,7 +7,7 @@
 
 <div class="app">
     <Navbar user={data.user} />
-    <main>
+    <main class="flex items-center justify-center p-5">
         <slot />
     </main>
 </div>

@@ -1,6 +1,6 @@
 import { db } from "$lib/db.server";
 import { fail } from "@sveltejs/kit";
-import type { Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import { authUser } from "$lib/utils/auth.server";
 import { hashPassword } from "$lib/utils/password.server";
 import { redirect } from "@sveltejs/kit";
@@ -18,18 +18,24 @@ const RegisterForm = LoginForm.merge(
 );
 
 type ActionResultError = {
-  type: "invalid-data" | "invalid-credentials" | "user-exists",
+  type: "invalid-data" | "invalid-credentials" | "user-exists";
 } | {
-  type: "password-exists",
-  username: string,
+  type: "password-exists";
+  username: string;
 };
 
-type ActionResult = Promise<{
-  error: ActionResultError,
-}>;
+type ActionResult = {
+  error: ActionResultError;
+} | void;
 
-export const actions: Actions = {
-  login: async ({ cookies, request }): ActionResult => {
+export const load: PageServerLoad = ({ locals }) => {
+  if (locals.user) {
+    throw redirect(303, "/");
+  }
+};
+
+export const actions: Actions<ActionResult> = {
+  login: async ({ cookies, request }) => {
     const result = LoginForm.safeParse(
       Object.fromEntries(await request.formData()),
     );
@@ -43,9 +49,12 @@ export const actions: Actions = {
 
     const credentials = result.data;
 
+    const hashedPass = await hashPassword(credentials.password);
+
     const user = await db.user.findUnique({
       where: {
         username: credentials.username,
+        password: hashedPass,
       },
     });
 
@@ -56,6 +65,15 @@ export const actions: Actions = {
         },
       };
     }
+
+    user.loginCount += 1;
+
+    await db.user.update({
+      data: user,
+      where: {
+        id: user.id,
+      },
+    });
 
     const token = authUser(user);
     if (!token) {
@@ -74,9 +92,9 @@ export const actions: Actions = {
       maxAge: 60 * 60 * 24,
     });
 
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   },
-  register: async ({ cookies, request }): ActionResult => {
+  register: async ({ cookies, request }) => {
     const result = RegisterForm.safeParse(
       Object.fromEntries(await request.formData()),
     );
@@ -94,6 +112,7 @@ export const actions: Actions = {
     const foundUser = await db.user.findFirst({
       select: {
         username: true,
+        password: true,
       },
       where: {
         OR: [
@@ -104,19 +123,19 @@ export const actions: Actions = {
     });
 
     if (foundUser) {
-      if (foundUser.username === creds.username) {
-        return {
-          error: {
-            type: "user-exists",
-          } as const,
-        };
-      } else {
+      if (foundUser.password === hashedPass) {
         return {
           error: {
             type: "password-exists",
             username: foundUser?.username,
           } as const,
         } as const;
+      } else {
+        return {
+          error: {
+            type: "user-exists",
+          } as const,
+        };
       }
     }
 
@@ -140,7 +159,7 @@ export const actions: Actions = {
       maxAge: 60 * 60 * 24,
     });
 
-    throw redirect(302, "/");
+    throw redirect(303, "/");
   },
   logout: async ({ cookies, locals }) => {
     cookies.delete("AuthorizationToken");
