@@ -3,7 +3,7 @@
 
     export let data;
 
-    const users = data.pageUsers.toReversed();
+    const users = [...data.pageUsers].reverse();
 </script>
 
 <div class="flex flex-col gap-3">
