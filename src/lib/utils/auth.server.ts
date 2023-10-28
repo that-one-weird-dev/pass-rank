@@ -1,17 +1,18 @@
-import type { SessionUser } from "$lib/models/session-user";
 import type { JwtPayload } from "jsonwebtoken";
 import jwt from "jsonwebtoken";
+import { z } from "zod";
 
 const JWT_ACCESS_SECRET = "SUPER_SECRET_SECRET";
 
+export const JwtUser = z.object({
+  id: z.number(),
+});
+
 export function authUser(
-  user: SessionUser,
+  user: z.infer<typeof JwtUser>,
 ): string | undefined {
   return jwt.sign(
-    {
-      id: user.id,
-      username: user.username,
-    } satisfies SessionUser,
+    user,
     JWT_ACCESS_SECRET,
     {
       expiresIn: 60 * 60 * 24,
@@ -19,17 +20,20 @@ export function authUser(
   );
 }
 
-export function verifyUser(token: string): SessionUser | undefined {
-  let jwtUser: JwtPayload | string;
+export function verifyUser(token: string): z.infer<typeof JwtUser> | undefined {
+  let jwtData: JwtPayload | string;
   try {
-    jwtUser = jwt.verify(token, JWT_ACCESS_SECRET);
+    jwtData = jwt.verify(token, JWT_ACCESS_SECRET);
   } catch (e) {
     return undefined;
   }
 
-  if (typeof jwtUser === "string") {
+  if (typeof jwtData === "string") {
     return undefined;
   }
 
-  return jwtUser as SessionUser;
+  const jwtUser = JwtUser.safeParse(jwtData);
+  if (!jwtUser.success) return undefined;
+
+  return jwtUser.data;
 }

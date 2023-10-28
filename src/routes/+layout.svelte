@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Cookies from './Cookies.svelte';
     import Navbar from './Navbar.svelte';
     import './styles.css';
 
@@ -10,4 +11,5 @@
     <main class="flex items-center justify-center p-5">
         <slot />
     </main>
+    <Cookies show={data.user?.likesCookies == undefined} />
 </div>
