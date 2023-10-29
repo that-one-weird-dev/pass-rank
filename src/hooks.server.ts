@@ -22,14 +22,16 @@ async function getUser(authToken: string): Promise<SessionUser | undefined> {
   if (!jwtUser) return undefined;
 
   const user = await db.user.findUnique({
+    select: {
+      displayName: true,
+      username: true,
+      loginCount: true,
+      likesCookies: true,
+    },
     where: {
       id: jwtUser.id,
-    }
+    },
   });
-  if (!user) return undefined;
 
-  return {
-    id: user.id,
-    username: user.username,
-  }
+  return user ?? undefined;
 }

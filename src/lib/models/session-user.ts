@@ -1,5 +1,7 @@
 
 export type SessionUser = {
-  id: number,
   username: string,
+  displayName: string,
+  loginCount: number,
+  likesCookies: boolean,
 }
