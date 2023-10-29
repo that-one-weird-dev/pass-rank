@@ -8,8 +8,10 @@
 </script>
 
 <nav class="w-full bg-slate-800 text-white flex flex-row rounded-b-lg shadow-lg">
-    <div class="p-4 border-b border-l border-gray-700 w-full rounded-bl-lg">
+    <div class="p-4 border-b border-l border-gray-700 w-full rounded-bl-lg flex items-end gap-8">
         <button class="text-white text-3xl font-bold" on:click={() => goto('/')}>Pass/Rank</button>
+
+        <a href="/cookies">Cookies</a>
     </div>
 
     <div class="flex flex-row-reverse">
