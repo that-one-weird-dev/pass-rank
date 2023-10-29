@@ -1,15 +1,16 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { User } from '$lib/models/user';
-    import UserTag from './UserTag.svelte';
 
     export let user: User;
     export let rank: number | undefined = undefined;
     export let isCurrentUser: boolean = false;
 </script>
 
-<div
-    class="bg-slate-800 rounded-xl border border-gray-700 flex divide-x divide-gray-700 shadow-lg"
+<button
+    class="text-left bg-slate-800 rounded-xl border border-gray-700 flex divide-x divide-gray-700 shadow-lg hover:border-blue-600 cursor-pointer"
     class:border-indigo-600={isCurrentUser}
+    on:click={() => goto(`/user/${user.username}`)}
 >
     {#if rank}
         <div
@@ -30,14 +31,14 @@
     <div class="p-6 w-full flex flex-row justify-between gap-8">
         <div>
             <div class="text-3xl">{user.displayName}</div>
-            <div><UserTag username={user.username} /></div>
+            <div class="text-blue-600">@{user.username}</div>
         </div>
         <div class="text-xl">
             <strong class="text-green-300">{user.loginCount}</strong>
             {user.loginCount === 1 ? 'login' : 'logins'}
         </div>
     </div>
-</div>
+</button>
 
 <style>
     .glowing-gold {
