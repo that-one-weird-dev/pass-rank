@@ -1,5 +1,6 @@
 <script lang="ts">
-    import CookieStat from "./CookieStat.svelte";
+    import Stat from '../../components/Stat.svelte';
+
 
     export let data;
 
@@ -7,7 +8,7 @@
 </script>
 
 <div class="flex justify-evenly w-full">
-    <CookieStat percentage={enjoyerPercentage} message="Cookie enjoyers" />
+    <Stat value={enjoyerPercentage} suffix="%" message="Cookie enjoyers" />
 
-    <CookieStat percentage={100 - enjoyerPercentage} message="Bad people" />
+    <Stat value={100 - enjoyerPercentage} suffix="%" message="Bad people" />
 </div>

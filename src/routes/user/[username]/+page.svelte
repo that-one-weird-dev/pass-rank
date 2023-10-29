@@ -1,7 +1,19 @@
 <script lang="ts">
-    import User from '../../../components/User.svelte';
+    import Stat from '../../../components/Stat.svelte';
+    import UserTag from '../../../components/UserTag.svelte';
 
     export let data;
 </script>
 
-<User user={data.pageUser} />
+<div class="text-center">
+    <h1 class="text-4xl mb-2">
+        {data.pageUser.displayName}
+    </h1>
+    <div class="text-lg">
+        <UserTag username={data.pageUser.username} />
+    </div>
+
+    <section class="mt-8">
+        <Stat value={data.pageUser.loginCount} message="Total logins" />
+    </section>
+</div>
