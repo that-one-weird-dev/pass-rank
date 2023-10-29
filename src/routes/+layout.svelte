@@ -11,5 +11,5 @@
     <main class="flex items-center justify-center p-5">
         <slot />
     </main>
-    <Cookies show={data.user?.likesCookies == undefined} />
+    <Cookies show={data.user && data.user.likesCookies == undefined} />
 </div>
