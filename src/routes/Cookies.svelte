@@ -15,7 +15,7 @@
     async function confirm(likesCookies: boolean) {
         show = false;
 
-        await fetch('/user/likesCookies', {
+        await fetch('api/user/likesCookies', {
             method: "POST",
             body: JSON.stringify({
                 likesCookies,
