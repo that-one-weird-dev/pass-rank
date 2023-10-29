@@ -8,7 +8,7 @@
 </script>
 
 <div class="flex justify-evenly w-full">
-    <Stat value="{enjoyerPercentage}%" message="Cookie enjoyers" />
+    <Stat value={enjoyerPercentage} suffix="%" message="Cookie enjoyers" />
 
-    <Stat value="{100 - enjoyerPercentage}%" message="Bad people" />
+    <Stat value={100 - enjoyerPercentage} suffix="%" message="Bad people" />
 </div>

@@ -14,6 +14,6 @@
     </div>
 
     <section class="mt-8">
-        <Stat value={data.pageUser.loginCount.toString()} message="Total logins" />
+        <Stat value={data.pageUser.loginCount} message="Total logins" />
     </section>
 </div>
